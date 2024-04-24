@@ -79,7 +79,7 @@ function putCities(country){
             cities = ['Santiago', 'Valparaiso', 'Concepcion', 'Arica'];
             break;
         default:
-            cities = ['Seleccione un pais'];
+            cities = ['Seleccione un pais',];
             break;
     }
 
@@ -182,12 +182,17 @@ function domReady(){
 
     //Carga de ciudades
     countryElement = document.getElementById('country');
+    
+    cityElement = document.getElementById('city');
     countryElement.addEventListener('change', function(){
-        var cities = putCities(countryElement.value);
+        //Obtiene el option seleccionado
+        var country = countryElement.options[countryElement.selectedIndex].text;
+        var cities = putCities(country);
         var cityElement = document.getElementById('city');
         cityElement.innerHTML = '';
         for(var i = 0; i < cities.length; i++){
             var option = document.createElement('option');
+            option.value = i+1;
             option.text = cities[i];
             cityElement.add(option);
         }
