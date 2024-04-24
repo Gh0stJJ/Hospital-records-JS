@@ -39,7 +39,7 @@ main {
     /* centrar el contenido en el eje x */
     justify-content: center;
     flex-direction: row;
-    height: 65vh;
+    min-height: 70vh;
     gap: 20px;
 
 }
@@ -83,4 +83,9 @@ main {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+}
+
+.table-header {
+    background-color: var(--border-color);
+    color: var(--text-color);
 }

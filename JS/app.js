@@ -58,7 +58,7 @@ function createTable(){
     table = document.createElement('table');
     table.classList.add('table', 'table-striped', 'table-hover','table-borderless','table-responsive', 'table-primary', 'align-middle');
     var thead = document.createElement('thead');
-    thead.classList.add('table-success');
+    thead.classList.add('table-secondary');
     var caption = document.createElement('caption');
     caption.classList.add('table-caption');
     caption.innerHTML = 'Registros de consultas medicas';
