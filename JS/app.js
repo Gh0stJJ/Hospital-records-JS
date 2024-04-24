@@ -38,6 +38,14 @@ function calculateAge(birthday) { // birthday is a date
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
+function getCurrentDate(){
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    return dateTime;
+}
+
 
 //Creacion de objetos
 
@@ -116,12 +124,7 @@ function addRow(user){
     td.innerHTML = user.city;
     tr.appendChild(td);
     td = document.createElement('td');
-    //Curent date and time
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-    td.innerHTML = dateTime;
+    td.innerHTML = user.dateTime;
     tr.appendChild(td);
     tbody.appendChild(tr);
     return tbody;
@@ -269,7 +272,8 @@ function comprobarForm(e){
         phone: phone.value,
         birthdate: birthdate.value,
         country: countryElement.options[countryElement.selectedIndex].text,
-        city: cityElement.options[cityElement.selectedIndex].text
+        city: cityElement.options[cityElement.selectedIndex].text,
+        dateTime: getCurrentDate()
     };
 
 
