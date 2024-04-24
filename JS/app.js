@@ -24,6 +24,21 @@ var refTable;
 //Lista de usuarios
 var users = [];
 
+
+//Calculo de edad
+
+/**
+ * Calculate the age of a person 👴🏽
+ * @param {Date} birthday 
+ * @returns age in years
+ */
+function calculateAge(birthday) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+
 //Creacion de objetos
 
 function createTable(){
@@ -41,6 +56,9 @@ function createTable(){
     tr.appendChild(th);
     th = document.createElement('th');
     th.innerHTML = 'Cedula';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Edad';
     tr.appendChild(th);
     th = document.createElement('th');
     th.innerHTML = 'Direccion';
@@ -78,6 +96,9 @@ function addRow(user){
     tr.appendChild(td);
     td = document.createElement('td');
     td.innerHTML = user.id;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.age;
     tr.appendChild(td);
     td = document.createElement('td');
     td.innerHTML = user.address;
@@ -243,6 +264,7 @@ function comprobarForm(e){
     let user = {
         name: user_name.value,
         id: id_user.value,
+        age: calculateAge(new Date(birthdate.value)),
         address: address.value,
         phone: phone.value,
         birthdate: birthdate.value,
