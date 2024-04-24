@@ -17,9 +17,96 @@ var error;
 var formInput;
 var countryElement;
 var cityElement;
+var table;
+var refTable;
+
 
 //Lista de usuarios
 var users = [];
+
+//Creacion de objetos
+
+function createTable(){
+    table = document.createElement('table');
+    table.classList.add('table', 'table-striped', 'table-hover','table-borderless','table-responsive', 'table-primary', 'align-middle');
+    var thead = document.createElement('thead');
+    thead.classList.add('table-success');
+    var caption = document.createElement('caption');
+    caption.classList.add('table-caption');
+    caption.innerHTML = 'Registros de consultas medicas';
+    table.appendChild(caption);
+    var tr = document.createElement('tr');
+    var th = document.createElement('th');
+    th.innerHTML = 'Nombre';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Cedula';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Direccion';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Telefono';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Fecha de nacimiento';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Pais';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Ciudad';
+    tr.appendChild(th);
+    th = document.createElement('th');
+    th.innerHTML = 'Fecha de consulta';
+    tr.appendChild(th);
+    thead.appendChild(tr);
+    table.appendChild(thead);
+    var tbody = document.createElement('tbody');
+    tbody.classList.add('table-group-divider');
+    tbody.id = 'tableBody';
+    table.appendChild(tbody);
+
+}
+
+function addRow(user){
+    var tbody = document.getElementById('tableBody');
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.scope = 'row';
+    td.innerHTML = user.name;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.id;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.address;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.phone;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.birthdate;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.country;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    td.innerHTML = user.city;
+    tr.appendChild(td);
+    td = document.createElement('td');
+    //Curent date and time
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    td.innerHTML = dateTime;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return tbody;
+}
+
+
 
 
 //Funciones de validacion
@@ -139,7 +226,7 @@ function comprobarForm(e){
         error.classList.add('alert', 'alert-danger');
         error.innerHTML = "Debe seleccionar un pais";
         return false;
-    }else if (!city.value == 0){
+    }else if (city.value == 0){
         console.log("Debe seleccionar una ciudad");
         e.preventDefault(); //Evita que se envie el formulario
         error.classList.add('alert', 'alert-danger');
@@ -147,19 +234,31 @@ function comprobarForm(e){
         return false;
     }
 
-
+    //Creamos la tabla si no existe
+    if(!table){
+        createTable();
+        refTable.appendChild(table);
+    }
     //Agrega el usuario a la lista
-    users.push({
+    let user = {
         name: user_name.value,
         id: id_user.value,
         address: address.value,
         phone: phone.value,
         birthdate: birthdate.value,
-        country: country.value,
-        city: city.value
-    });
-    
+        country: countryElement.options[countryElement.selectedIndex].text,
+        city: cityElement.options[cityElement.selectedIndex].text
+    };
+
+
+    users.push(user);
+
+    //Agrega el usuario a la tabla
+    addRow(user);
+
     console.log(users);
+    e.preventDefault(); //Evita que se envie el formulario
+    
     return true;
 
     //fino
@@ -174,10 +273,11 @@ function domReady(){
     id_user = document.getElementById('id');
     address = document.getElementById('address');
     phone = document.getElementById('phone');
-    birthdate = document.getElementById('birthdate');
+    birthdate = document.getElementById('birthday');
     country = document.getElementById('country');
     city = document.getElementById('city');
     error = document.getElementById('error');
+    refTable = document.getElementById('refTable');
     
 
     //Carga de ciudades
@@ -186,9 +286,9 @@ function domReady(){
     cityElement = document.getElementById('city');
     countryElement.addEventListener('change', function(){
         //Obtiene el option seleccionado
-        var country = countryElement.options[countryElement.selectedIndex].text;
-        var cities = putCities(country);
-        var cityElement = document.getElementById('city');
+        let country = countryElement.options[countryElement.selectedIndex].text;
+        let cities = putCities(country);
+        let cityElement = document.getElementById('city');
         cityElement.innerHTML = '';
         for(var i = 0; i < cities.length; i++){
             var option = document.createElement('option');
@@ -200,6 +300,8 @@ function domReady(){
 
     //Inicio de la carga de eventos 
     formInput.addEventListener('submit', comprobarForm);
+
+    
 
 
     //agregar lisneners para imagen

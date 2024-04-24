@@ -78,3 +78,9 @@ main {
     font-size: 1.2rem;
     padding-left: 20px;
 }
+
+#refTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
