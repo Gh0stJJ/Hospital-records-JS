@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/darkly/bootstrap.min.css"
+        integrity="sha512-HDszXqSUU0om4Yj5dZOUNmtwXGWDa5ppESlX98yzbBS+z+3HQ8a/7kcdI1dv+jKq+1V5b01eYurE7+yFjw6Rdg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+    <!-- Static content -->
+    <link rel="stylesheet" href="./CSS/styles.css">
+
+    <title>Medical records 🏥</title>
+</head>
+
+<body>
+
+    <nav id="navbar">
+        <img src="./assets/logo_new.jpeg" width="50" />
+        <div id="brand">
+            Medical reports
+        </div>
+    </nav>
+
+
+    <main>
+        <div id="container">
+
+            <div id="photo">
+                <p>Arrastre una fotografia</p>
+
+            </div>
+
+            <div id="form">
+                <form action="#">
+                    <!-- error alert alert-danger -->
+                    <div id ="error" role="alert">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id" class="form-label">Cedula</label>
+                        <input type="text" class="form-control" id="id" name="id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Direccion</label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Telefono</label>
+                        <input type="text" class="form-control" id="phone" name="phone">
+                    </div>
+                    <div class="mb-3">
+                        <!-- Fecha de nacimiento -->
+                        <label for="birthday" class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" id="birthday" name="birthday" required>
+                    </div>
+
+                    <!-- Lugar de nacimiento Pais combo box -->
+                    <div class="mb-3">
+                        <label for="country" class="form-label">Pais de nacimiento</label>
+                        <select class="form-select" id="country" name="country">
+                            <option value="0">--Seleccione una opcion--</option>
+                            <option value="1">Colombia</option>
+                            <option value="2">Chile</option>
+                            <option value="3">Ecuador</option>
+                            <option value="4">Peru</option>
+                        </select>
+                    </div>
+
+                    <!-- Ciudad de naci combo box -->
+                    <div class="mb-3">
+                        <label for="city" class="form-label">Ciudad de nacimiento</label>
+                        <select class="form-select" id="city" name="city">
+                            <option value="0">--Seleccione una opcion--</option>
+                        </select>
+                    </div>
+
+                    <!-- summit btn -->
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+
+                </form>
+            </div>
+
+
+        </div>
+
+        <section class="table-responsive-md">
+            <table class="table table-striped table-hover table-borderless table-primary align-middle">
+                <thead class="table-light">
+                    <caption>
+                        Registros
+                    </caption>
+                    <tr>
+                        <th>Column 1</th>
+                        <th>Column 2</th>
+                        <th>Column 3</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr class="table-primary">
+                        <td scope="row">Item</td>
+                        <td>Item</td>
+                        <td>Item</td>
+                    </tr>
+                    <tr class="table-primary">
+                        <td scope="row">Item</td>
+                        <td>Item</td>
+                        <td>Item</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+
+                </tfoot>
+            </table>
+            </div>
+        </section>
+
+
+
+    </main>
+    <!-- Scripts (Se incluyen al final para que no bloquee al HTML)-->
+    <script src="./JS/app.js"></script>
+</body>
+
+
+</html>
