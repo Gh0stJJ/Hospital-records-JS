@@ -39,7 +39,7 @@ main {
     /* centrar el contenido en el eje x */
     justify-content: center;
     flex-direction: row;
-    height: 80vh;
+    height: 65vh;
     gap: 20px;
 
 }

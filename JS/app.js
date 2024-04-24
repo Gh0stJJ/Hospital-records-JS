@@ -21,6 +21,7 @@ var table;
 var refTable;
 
 
+
 //Lista de usuarios
 var users = [];
 
@@ -38,6 +39,10 @@ function calculateAge(birthday) { // birthday is a date
     return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
 
+/**
+ * Calcula la fecha y hora actual
+ * @returns Fecha actual en formato yyyy-mm-dd hh:mm:ss
+ */
 function getCurrentDate(){
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -256,6 +261,12 @@ function comprobarForm(e){
         error.classList.add('alert', 'alert-danger');
         error.innerHTML = "Debe seleccionar una ciudad";
         return false;
+    }
+    //remueve la clase de error si existe
+    if(error.classList.contains('alert-danger')){
+        error.classList.remove('alert-danger');
+        error.classList.remove('alert');
+        error.innerHTML = '';
     }
 
     //Creamos la tabla si no existe
