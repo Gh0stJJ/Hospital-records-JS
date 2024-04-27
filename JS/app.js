@@ -136,7 +136,9 @@ function addImage(e){
 
 
 //Creacion de objetos
-
+/**
+ * Crea la tabla principal
+ */
 function createTable(){
     table = document.createElement('table');
     table.classList.add('table', 'table-striped', 'table-hover','table-borderless','table-responsive', 'table-primary', 'align-middle');
@@ -183,6 +185,10 @@ function createTable(){
 
 }
 
+
+/**
+ * Crea la tabla de hijos
+ */
 function createSonsTable(){
     auxTable = document.createElement('table');
     auxTable.classList.add('table', 'table-striped', 'table-hover','table-borderless','table-responsive', 'table-primary', 'align-middle');
@@ -206,7 +212,11 @@ function createSonsTable(){
 
 }
 
-
+/**
+ * Agrega una fila a la tabla principal
+ * @param {JSON} user 
+ * @returns tbody
+ */
 function addRow(user){
     var tbody = document.getElementById('tableBody');
     var tr = document.createElement('tr');
@@ -242,6 +252,11 @@ function addRow(user){
     return tbody;
 }
 
+/**
+ * Agrega una fila a la tabla de hijos
+ * @param {JSON} son 
+ * @returns  tbody
+ */
 function addSonsRow(son){
     var tbody = document.getElementById('tableBodyChild');
     var tr = document.createElement('tr');
@@ -320,6 +335,10 @@ function putCities(country){
     return cities;
 }
 
+
+/**
+ * Oculta el radio button de hijos y muestra el input para el nombre del hijo en caso de que se seleccione que tiene hijos
+ */
 function toggleChildInput() {
     rbChecker = true;
     if (hasChildren.checked) {
@@ -351,6 +370,11 @@ function toggleChildInput() {
 
 // Funciones de eventos
 
+/**
+ * Comprueba el formulario a nivel de JS antes de enviarlo
+ * @param {Event} e 
+ * @returns boolean
+ */
 function comprobarForm(e){
     if(id_user.value.length == 0){
         console.log("El campo cedula no puede estar vacio");
@@ -478,7 +502,9 @@ function comprobarForm(e){
 }
 
 
-
+/**
+ * Esta funcion se ejecuta cuando el DOM esta listo
+ */
 function domReady(){
     //Captura todos los elementos necesarios
     formInput = document.getElementById('form');
@@ -497,7 +523,6 @@ function domReady(){
     fillBlank = document.getElementById('fillBlank');
     para = document.getElementById('para');
     
-
     //Radio button elemennts
     radioBtn = document.getElementById('radioBtn');
     hasChildren = document.getElementById('children1');
@@ -507,9 +532,6 @@ function domReady(){
     //Si da click en el radio button se activa el evento
     hasChildren.addEventListener('click', toggleChildInput);
     noChildren.addEventListener('click', toggleChildInput);
-
-    
-
 
     //Set click listener al div 
     imagen.addEventListener('click', addImage);
@@ -535,10 +557,6 @@ function domReady(){
     //Inicio de la carga de eventos 
     formInput.addEventListener('submit', comprobarForm);
 
-    
-
-
-    //agregar lisneners para imagen
 
 }
 
