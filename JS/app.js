@@ -15,10 +15,10 @@ var birthdate;
 var country;
 var city;
 var sonName;
-var error;
-var setAgeCheck = false;
-var formInput;
 
+var error;
+
+var formInput;
 var countryElement;
 var cityElement;
 var table;
@@ -32,7 +32,10 @@ var radioBtn;
 var hasChildren;
 var noChildren;
 var childInputContainer;
+
+//Variables de control *flags*
 var rbChecker = false;
+var setAgeCheck = false;
 
 
 
