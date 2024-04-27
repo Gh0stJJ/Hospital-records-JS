@@ -14,15 +14,25 @@ var phone;
 var birthdate;
 var country;
 var city;
+var sonName;
 var error;
+var setAgeCheck = false;
 var formInput;
+
 var countryElement;
 var cityElement;
 var table;
+var auxTable;
 var imgElement;
 var fillBlank;
 var para;
 var refTable;
+var childrenTable;
+var radioBtn;
+var hasChildren;
+var noChildren;
+var childInputContainer;
+var rbChecker = false;
 
 
 
@@ -66,12 +76,17 @@ function getCurrentDate(){
  * 
  */
 function setAge(age){
-
-    var ageElement = document.getElementById('age');
-    var ageString = age.years + ' años, ' + age.months + ' meses, ' + age.days + ' dias y ' + age.hours + ' horas';
-    var paragraph = document.createElement('p');
-    paragraph.innerHTML = ageString;
-    ageElement.appendChild(paragraph);
+    
+    if(setAgeCheck){
+        return;
+    }else{
+        var ageElement = document.getElementById('age');
+        var ageString = age.years + ' años, ' + age.months + ' meses, ' + age.days + ' dias y ' + age.hours + ' horas';
+        var paragraph = document.createElement('p');
+        paragraph.innerHTML = ageString;
+        ageElement.appendChild(paragraph);
+        setAgeCheck = true;
+    }
 
 }
 
@@ -165,6 +180,30 @@ function createTable(){
 
 }
 
+function createSonsTable(){
+    auxTable = document.createElement('table');
+    auxTable.classList.add('table', 'table-striped', 'table-hover','table-borderless','table-responsive', 'table-primary', 'align-middle');
+    var thead = document.createElement('thead');
+    thead.classList.add('table-secondary');
+    var caption = document.createElement('caption');
+    caption.classList.add('table-caption');
+    caption.innerHTML = 'Hijo(s)';
+    auxTable.appendChild(caption);
+    var tr = document.createElement('tr');
+    var th = document.createElement('th');
+    th.innerHTML = 'Nombre';
+    tr.appendChild(th);
+    thead.appendChild(tr);
+    auxTable.appendChild(thead);
+    var tbody = document.createElement('tbody');
+    tbody.classList.add('table-group-divider');
+    tbody.id = 'tableBodyChild';
+    auxTable.appendChild(tbody);
+
+
+}
+
+
 function addRow(user){
     var tbody = document.getElementById('tableBody');
     var tr = document.createElement('tr');
@@ -195,6 +234,17 @@ function addRow(user){
     tr.appendChild(td);
     td = document.createElement('td');
     td.innerHTML = user.dateTime;
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+    return tbody;
+}
+
+function addSonsRow(son){
+    var tbody = document.getElementById('tableBodyChild');
+    var tr = document.createElement('tr');
+    var td = document.createElement('td');
+    td.scope = 'row';
+    td.innerHTML = son.name;
     tr.appendChild(td);
     tbody.appendChild(tr);
     return tbody;
@@ -267,6 +317,35 @@ function putCities(country){
     return cities;
 }
 
+function toggleChildInput() {
+    rbChecker = true;
+    if (hasChildren.checked) {
+        console.log('Has children');
+        //Borramos al abuelo
+        var inicio = document.getElementById('hijos');
+        hasChildren.parentElement.parentElement.remove();
+        //Agregamos un campo para el nombre del hijo
+        var div = document.createElement('div');
+        div.classList.add('form-group');
+        var label = document.createElement('label');
+        label.innerHTML = 'Nombre del hijo';
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.id = 'sonName';
+        input.classList.add('form-control');
+        div.appendChild(label);
+        div.appendChild(input);
+        inicio.appendChild(div);
+
+        sonName = document.getElementById('sonName');
+    } else {
+        console.log('Has not children');
+    }
+}
+
+
+
+
 // Funciones de eventos
 
 function comprobarForm(e){
@@ -326,7 +405,20 @@ function comprobarForm(e){
         error.classList.add('alert', 'alert-danger');
         error.innerHTML = "Debe seleccionar una ciudad";
         return false;
+    }else if(!rbChecker){
+        console.log("Debe seleccionar si tiene hijos o no");
+        e.preventDefault(); //Evita que se envie el formulario
+        error.classList.add('alert', 'alert-danger');
+        error.innerHTML = "Debe seleccionar si tiene hijos o no 😠";
+        return false;
+    }else if(hasChildren.checked && sonName.value.length == 0){
+        console.log("Debe ingresar el nombre del hijo");
+        e.preventDefault(); //Evita que se envie el formulario
+        error.classList.add('alert', 'alert-danger');
+        error.innerHTML = "Debe ingresar el nombre del hijo";
+        return false;
     }
+
     //remueve la clase de error si existe
     if(error.classList.contains('alert-danger')){
         error.classList.remove('alert-danger');
@@ -334,10 +426,23 @@ function comprobarForm(e){
         error.innerHTML = '';
     }
 
-    //Creamos la tabla si no existe
+    //Creamos la tabla principal si no existe
     if(!table){
         createTable();
         refTable.appendChild(table);
+    }
+
+    //Creamos la tabla de hijos si se selecciono que tiene hijos
+    if(hasChildren.checked){
+        if(!auxTable){
+            createSonsTable();
+            childrenTable.appendChild(auxTable);
+        }
+        var son = {
+            name: sonName.value
+        };
+        //Agrega el hijo a la tabla
+        addSonsRow(son);
     }
 
     setAge(calculateAge(new Date(birthdate.value)));
@@ -383,10 +488,24 @@ function domReady(){
     city = document.getElementById('city');
     error = document.getElementById('error');
     refTable = document.getElementById('refTable');
+    childrenTable = document.getElementById('childrenTable');
     imagen = document.getElementById('photo');
     imgElement = document.getElementById('img');
     fillBlank = document.getElementById('fillBlank');
     para = document.getElementById('para');
+    
+
+    //Radio button elemennts
+    radioBtn = document.getElementById('radioBtn');
+    hasChildren = document.getElementById('children1');
+    noChildren = document.getElementById('children2');
+    childInputContainer = document.getElementById('childInputContainer');
+
+    //Si da click en el radio button se activa el evento
+    hasChildren.addEventListener('click', toggleChildInput);
+    noChildren.addEventListener('click', toggleChildInput);
+
+    
 
 
     //Set click listener al div 
