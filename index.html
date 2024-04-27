@@ -32,7 +32,9 @@
         <div id="container">
 
             <div id="photo">
-                <p>Arrastre una fotografia</p>
+                <div id = "fillBlank"></div>
+                <p id = "para">Click aquí para agregar una foto</p>
+                <img src="./assets/logo_new.jpeg" alt="Foto de perfil" id="img" />
 
             </div>
 
@@ -64,6 +66,10 @@
                         <input type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
 
+                    <div id = "age" class="mb-3"> 
+
+                    </div>
+
                     <!-- Lugar de nacimiento Pais combo box -->
                     <div class="mb-3">
                         <label for="country" class="form-label">Pais de nacimiento</label>
@@ -84,9 +90,27 @@
                         </select>
                     </div>
 
-                    <!-- summit btn -->
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <!-- Posibles hijos del usuario
+                    <div id = 'hijos' class="mb-3">
+                        <label for="children" class="form-label">Hijos</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="children" id="children1" value="1">
+                            <label class="form-check-label" for="children1">
+                                Si
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="children" id="children2" value="0">
+                            <label class="form-check-label" for="children2">
+                                No
+                            </label>
+                        </div>
+                    </div> -->
 
+
+                    <!-- summit btn -->
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    
                 </form>
             </div>
 

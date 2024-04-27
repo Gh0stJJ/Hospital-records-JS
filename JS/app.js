@@ -6,6 +6,7 @@
 
 // Inicializacion de var, objetos, DOM
 
+
 var user_name;
 var id_user;
 var address;
@@ -18,6 +19,9 @@ var formInput;
 var countryElement;
 var cityElement;
 var table;
+var imgElement;
+var fillBlank;
+var para;
 var refTable;
 
 
@@ -31,12 +35,16 @@ var users = [];
 /**
  * Calculate the age of a person 👴🏽
  * @param {Date} birthday 
- * @returns age in years
+ * @returns age in years, months, days and hours
  */
 function calculateAge(birthday) { // birthday is a date
     var ageDifMs = Date.now() - birthday.getTime();
     var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
+    var years = Math.abs(ageDate.getUTCFullYear() - 1970);
+    var months = Math.abs(ageDate.getUTCMonth());
+    var days = Math.abs(ageDate.getUTCDate() - 1);
+    var hours = Math.abs(ageDate.getUTCHours());
+    return {years: years, months: months, days: days, hours: hours};
 }
 
 /**
@@ -49,6 +57,63 @@ function getCurrentDate(){
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
     var dateTime = date+' '+time;
     return dateTime;
+}
+
+
+/**
+ * Establece la edad en el DOM
+ * @param {JSON} age
+ * 
+ */
+function setAge(age){
+
+    var ageElement = document.getElementById('age');
+    var ageString = age.years + ' años, ' + age.months + ' meses, ' + age.days + ' dias y ' + age.hours + ' horas';
+    var paragraph = document.createElement('p');
+    paragraph.innerHTML = ageString;
+    ageElement.appendChild(paragraph);
+
+}
+
+
+/**
+ * Agrega una imagen al div imagen retrato
+ * @param {*} e 
+ */
+function addImage(e){
+    e.preventDefault();
+    console.log('click');
+
+    
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.click();
+
+    input.addEventListener('change', function(){
+        var file = input.files[0];
+
+        if (file) {
+
+            var reader = new FileReader();
+            reader.onload = function(e){
+                
+                imgElement.src = e.target.result;
+
+                //Set zindex to 1
+
+                imgElement.style.zIndex = 1;
+                fillBlank.style.zIndex = 0;
+                para.style.zIndex = 0;
+
+            };
+            reader.readAsDataURL(file);
+
+            console.log(imagen.src);
+        }
+        
+    });
+
 }
 
 
@@ -274,11 +339,14 @@ function comprobarForm(e){
         createTable();
         refTable.appendChild(table);
     }
+
+    setAge(calculateAge(new Date(birthdate.value)));
+
     //Agrega el usuario a la lista
     let user = {
         name: user_name.value,
         id: id_user.value,
-        age: calculateAge(new Date(birthdate.value)),
+        age: calculateAge(new Date(birthdate.value)).years,
         address: address.value,
         phone: phone.value,
         birthdate: birthdate.value,
@@ -315,7 +383,14 @@ function domReady(){
     city = document.getElementById('city');
     error = document.getElementById('error');
     refTable = document.getElementById('refTable');
-    
+    imagen = document.getElementById('photo');
+    imgElement = document.getElementById('img');
+    fillBlank = document.getElementById('fillBlank');
+    para = document.getElementById('para');
+
+
+    //Set click listener al div 
+    imagen.addEventListener('click', addImage);
 
     //Carga de ciudades
     countryElement = document.getElementById('country');
